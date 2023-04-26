@@ -71,8 +71,9 @@ async function init() {
 
 
 function viewAllDepartments() {
-
+    console.log('vew all dp')
     db.query('SELECT * FROM department', (err, res) => {
+        console.log('i am here w/ res', res)
         if (err) {
             return reject(err);
         }
@@ -114,12 +115,16 @@ function viewAllEmployees() {
 }
 function addDeparment(){
 
-    db.query('SELECT * FROM department', (err, res) => {
+    // ask the user for name of dept (prompt?)
+
+    // add the new row to dept table (insert into?) w/ query tool
+
+    db.query('', (err, res) => {
         if (err) {
             return reject(err);
         }
 
-        console.table(res);
+        // console.table(res);
         init();
     })
 }
