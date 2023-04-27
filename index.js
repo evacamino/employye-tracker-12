@@ -115,25 +115,88 @@ function viewAllEmployees() {
 }
 function addDeparment(){
 
-    // ask the user for name of dept (prompt?)
+// const addDeptPrompt = [{
+//     //     type: "input",
+//     //     name: "department",
+//     //     message: "What is the name of the new department?",}
 
-    // add the new row to dept table (insert into?) w/ query tool
+//     // ]
+//     // const newDept = inquirer.prompt(addDeptPrompt);
+//     // console.log(newDept)
 
-    db.query('', (err, res) => {
-        if (err) {
-            return reject(err);
-        }
+//   db.query(`INSERT INTO department (name),
+//   VALUES (?)`,(err,res) => {
+//     if (err) {
+//         return reject(err);
+//     }
 
-        // console.table(res);
-        init();
-    })
+//    // console.table(res);
+//     //init();
+// })
 }
+
+// const addDeptPrompt = [{
+//         type: "input",
+//         name: "department",
+//         message: "What is the name of the new department?",}
+
+//     ]
+//     const newDept = inquirer.prompt(addDeptPrompt);
+//     console.log(newDept)
+
+    
+//     db.query('INSERT INTO `department`(id, name) VALUES ?'), (err, res) => {
+//         if (err) {
+//             return reject(err);
+//         }
+
+//          console.table(res);
+//         init();
+//     }
+
+        ///// ask the user for name of dept (prompt?)
+
+    ///// add the new row to dept table (insert into?) w/ query tool
+
 function addRole(){
     console.log("function for add role")
 }
 
 function addEmployee(){
     console.log("function for add employee")
+    db.query("SELECT * FROM role", function (err, res){
+        if (err) return (err);
+            inquirer.prompt([
+                {
+                name: "firstName",
+                type: "input",
+                message: "What is the first name?"
+            },
+            {
+                name: "lastName",
+                type: "input",
+                message: "What is the last name?"
+            },
+            {
+                name: "managerId",
+                type: "input",
+                message: "What is the manager id?"
+            },
+            {
+                name: "addEmployeeRole",
+                type: "input",
+                message: "What is the role?"
+            },
+        ]).then(function(answer) {
+            db.query("INSERT INTO employee SET ?",{
+            
+                first_name: answer.firstName,
+                last_name: answer.lastName,
+                manager_id: answer.managerId,
+                added_Role: answer.addEmployeeRole,
+            }),
+        });
+    });
 }
 
 function updateEmployeeRole(){
@@ -143,4 +206,4 @@ function updateEmployeeRole(){
 // init();
 // study react as a full stack developer
 // basic of mysql mostly
-// ask questions thru inquirer)
+// ask questions thru inquirer

@@ -25,6 +25,6 @@ VALUES
     ("Jared", "Lee", 1, 1),
     ("Kerry", "Dawn", 4, 1),
     ("Max", "Shaun'", 4, 2),
-    ("Derrick", "Fisher", 1, 2),
+    ("Derrick", "Fisher", 4, 2),
     ("Tim", "Arnold", 2, 2),
     ("Selma", "Taryn", 3, 3);
