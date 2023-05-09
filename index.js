@@ -71,7 +71,6 @@ function viewAllDepartments() {
     console.table(res);
     init();
   });
-
 }
 
 function viewAllRoles() {
@@ -96,30 +95,47 @@ function viewAllEmployees() {
       LEFT JOIN role on employee.role_id = role.id 
       LEFT JOIN department on role.department_id = department.id 
       LEFT JOIN employee manager on employee.manager_id = manager.id`;
-  db.query(sqlEmployeeQuery, function (error, results) {
-    if (error) throw error;
-    console.table(results);
+  db.query(sqlEmployeeQuery, function (err, res) {
+    if (err) return err;
+    console.table(res);
     db.end();
   });
 }
 
 function addDeparment() {
-  // const addDeptPrompt = [{
-  //     //     type: "input",
-  //     //     name: "department",
-  //     //     message: "What is the name of the new department?",}
-  //     // ]
-  //     // const newDept = inquirer.prompt(addDeptPrompt);
-  //     // console.log(newDept)
-  //   db.query(`INSERT INTO department (name),
-  //   VALUES (?)`,(err,res) => {
-  //     if (err) {
-  //         return reject(err);
-  //     }
-  //    // console.table(res);
-  //     //init();
-  // })
+  inquirer
+    .prompt([
+      {
+        name: "newDeptName",
+        type: "input",
+        message: "What is the name of the new department?",
+      },
+    ])
+
+    .then(function (answer) {
+      let newDept = {
+        name: answer.newDeptName,
+      };
+      console.log(newDept);
+      db.query("INSERT INTO department SET ?", newDept), init();
+    });
 }
+
+// const addDeptPrompt = [{
+//     //     type: "input",
+//     //     name: "department",
+//     //     message: "What is the name of the new department?",}
+//     // ]
+//     // const newDept = inquirer.prompt(addDeptPrompt);
+//     // console.log(newDept)
+//   db.query(`INSERT INTO department (name),
+//   VALUES (?)`,(err,res) => {
+//     if (err) {
+//         return reject(err);
+//     }
+//    // console.table(res);
+//     //init();
+// })
 
 // const addDeptPrompt = [{
 //         type: "input",
@@ -146,10 +162,32 @@ function addDeparment() {
 function addRole() {
   console.log("function for add role");
   // department.title department.id
+  db.query("SELECT * FROM department", function (err, res) {
+    if (err) return err;
+    inquirer.prompt([
+      {
+        name: "title",
+        message: "What is the name of role?",
+      },
+      {
+        name: "salary",
+        message: "what is the amout of salary for this role?",
+      },
+      {
+        type: "list",
+        name: "addRole",
+        message: "Which department does this role belong too?",
+        choices: res.map((department) => ({
+          name: department.title,
+          value: department.id,
+        })),
+      },
+    ]);
+  });
 }
 
 function addEmployee() {
-  console.log("function for add employee");
+  //console.log("function for add employee");
   db.query("SELECT * FROM role", function (err, res) {
     if (err) return err;
     // console.log(res);
