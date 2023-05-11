@@ -228,7 +228,7 @@ function addEmployee() {
         let newEmployee = {
           firstName: answer.firstName,
           lastName: answer.lastName,
-          roleId: answer.addEmployeeRole,
+          roleId: answer.roleId,
           managerId: answer.managerId,
         };
         // console.log(newEmployee);
