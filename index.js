@@ -164,39 +164,43 @@ function addRole() {
   // department.title department.id
   db.query("SELECT * FROM department", function (err, res) {
     if (err) return err;
-    inquirer.prompt([
+    console.log(res);
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          message: "What is the title of role?",
+        },
+        {
+          name: "salary",
+          message: "what is the amount of salary for this role?",
+        },
+        {
+          type: "list",
+          name: "addDeparmentRole",
+          message: "Which department does this role belong too?",
+          choices: res.map((department) => ({ name: department.title, value: department.id})),
+        },
       {
-        name: "title",
-        message: "What is the name of role?",
-      },
-      {
-        name: "salary",
-        message: "what is the amout of salary for this role?",
-      },
-      {
-        type: "list",
-        name: "addRole",
-        message: "Which department does this role belong too?",
-        choices: res.map((department) => ({
-          name: department.title,
-          value: department.id,
-        }))
-        .then(function (answer) {
-          let newRole = {
-            title: answer.title,
-            salary: answer.salary,
-            department: answer.department
-          };
-          // console.log(newEmployee);
-          db.query("INSERT INTO department SET ?", newRole), init();
-        }),
-    }]);
-      },
-    );
-  };
-
+        name: "id",
+        type: "input",
+        message: "What is the id?",
+      }
+      ])
+      .then(function (answer) {
+        let newRole = {
+          title: answer.title,
+          salary: answer.salary,
+          department: answer.addDeparmentRole,
+          id: answer.id
+        };
+        console.log(newRole);
+        db.query("INSERT INTO role SET ?", newRole), init();
+      });
+  });
+}
 function addEmployee() {
-  //console.log("function for add employee");
+  console.log("function for add employee");
   db.query("SELECT * FROM role", function (err, res) {
     if (err) return err;
     // console.log(res);
@@ -226,10 +230,10 @@ function addEmployee() {
       ])
       .then(function (answer) {
         let newEmployee = {
-          firstName: answer.firstName,
-          lastName: answer.lastName,
-          roleId: answer.roleId,
-          managerId: answer.managerId,
+          first_name: answer.firstName,
+          last_name: answer.lastName,
+          role_id: answer.addEmployeeRole,
+          manager_id: answer.managerId,
         };
         // console.log(newEmployee);
         db.query("INSERT INTO employee SET ?", newEmployee), init();
