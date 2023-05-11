@@ -180,11 +180,20 @@ function addRole() {
         choices: res.map((department) => ({
           name: department.title,
           value: department.id,
-        })),
+        }))
+        .then(function (answer) {
+          let newRole = {
+            title: answer.title,
+            salary: answer.salary,
+            department: answer.department
+          };
+          // console.log(newEmployee);
+          db.query("INSERT INTO department SET ?", newRole), init();
+        }),
+    }]);
       },
-    ]);
-  });
-}
+    );
+  };
 
 function addEmployee() {
   //console.log("function for add employee");
@@ -217,10 +226,10 @@ function addEmployee() {
       ])
       .then(function (answer) {
         let newEmployee = {
-          first_name: answer.firstName,
-          last_name: answer.lastName,
-          role_id: answer.addEmployeeRole,
-          manager_id: answer.managerId,
+          firstName: answer.firstName,
+          lastName: answer.lastName,
+          roleId: answer.addEmployeeRole,
+          managerId: answer.managerId,
         };
         // console.log(newEmployee);
         db.query("INSERT INTO employee SET ?", newEmployee), init();
